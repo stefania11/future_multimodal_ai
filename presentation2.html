@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Keynote: The Future of Multimodal AI Applications</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-light.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/javascript.min.js"></script>
+
+    <style>
+        /* Base styles */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #FFFFFF; /* White background */
+            color: #000000; /* Black text */
+            overflow: hidden; /* Prevent scrolling the whole page */
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        /* Slide container */
+        #presentation {
+            width: 90vw; /* Responsive width */
+            max-width: 1200px; /* Max width */
+            height: 80vh; /* Responsive height */
+            max-height: 700px; /* Max height */
+            position: relative;
+            overflow: hidden; /* Hide slides outside the container */
+            border-radius: 0.75rem; /* Rounded corners */
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            background-color: #FFFFFF;
+        }
+
+        /* Individual slide styling */
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #FFFFFF;
+            padding: 3rem 4rem; /* Generous padding */
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+            z-index: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center; /* Center content vertically */
+            overflow-y: auto; /* Allow scrolling within a slide if needed */
+        }
+
+        /* Active slide */
+        .slide.active {
+            opacity: 1;
+            z-index: 2;
+        }
+
+        /* Navigation buttons */
+        .nav-button {
+            position: absolute;
+            bottom: 1.5rem;
+            z-index: 3;
+            background: linear-gradient(to right, #FFD6E0, #E0D6FF, #C1F0DB); /* Pastel gradient */
+            color: #000000; /* Black text */
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 9999px; /* Pill shape */
+            cursor: pointer;
+            font-weight: 600;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .nav-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+        }
+        .nav-button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        #prevBtn {
+            left: 1.5rem;
+        }
+
+        #nextBtn {
+            right: 1.5rem;
+        }
+
+        /* Slide counter */
+        #slideCounter {
+            position: absolute;
+            bottom: 1.5rem;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 3;
+            font-size: 0.875rem; /* 14px */
+            color: #666666; /* Medium gray */
+        }
+
+        /* Title styling */
+        .slide-title {
+            font-size: 2.25rem; /* 36px */
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(to right, #FFD6E0, #E0D6FF, #C1F0DB);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent; /* Make text transparent to show gradient */
+            line-height: 1.2;
+        }
+        .slide-subtitle {
+            font-size: 1.25rem; /* 20px */
+            font-weight: 500;
+            color: #333333; /* Dark gray */
+            margin-bottom: 2rem;
+        }
+
+        /* Content styling */
+        .slide-content {
+            font-size: 1.125rem; /* 18px */
+            line-height: 1.7;
+            color: #333333; /* Dark gray */
+        }
+        .slide-content ul {
+            list-style-type: disc;
+            margin-left: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        .slide-content li {
+            margin-bottom: 0.75rem;
+        }
+        .slide-content strong {
+            font-weight: 600;
+            color: #000000; /* Black */
+        }
+        .slide-content a {
+            color: #000000; /* Black */
+            text-decoration: underline;
+            background: linear-gradient(to right, rgba(255, 214, 224, 0.5), rgba(224, 214, 255, 0.5), rgba(193, 240, 219, 0.5)); /* Transparent pastel gradient underline */
+            transition: background 0.3s ease;
+        }
+        .slide-content a:hover {
+             background: linear-gradient(to right, #FFD6E0, #E0D6FF, #C1F0DB);
+        }
+
+        /* Code block styling (highlight.js overrides) */
+        pre {
+            margin-top: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 0.5rem; /* Rounded corners */
+            overflow-x: auto; /* Allow horizontal scrolling */
+        }
+        pre code.hljs {
+            padding: 1rem;
+            border-radius: 0.5rem;
+            font-size: 0.9rem; /* Slightly smaller font for code */
+        }
+
+        /* Footer styling */
+        .slide-footer {
+            margin-top: auto; /* Push footer to bottom */
+            padding-top: 1.5rem;
+            font-size: 0.875rem; /* 14px */
+            color: #666666; /* Medium gray */
+            text-align: center;
+            border-top: 1px solid #E0D6FF; /* Lavender border */
+        }
+
+        /* Specific slide layouts */
+        .title-slide {
+            text-align: center;
+            justify-content: center;
+        }
+        .title-slide .slide-title {
+            font-size: 3rem; /* Larger title */
+        }
+        .title-slide .slide-subtitle {
+            font-size: 1.5rem; /* Larger subtitle */
+            margin-bottom: 0.5rem;
+        }
+        .title-slide .affiliation {
+            font-size: 1.25rem;
+            color: #333333;
+            margin-top: 1rem;
+        }
+
+        .two-column {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Responsive columns */
+            gap: 2rem;
+            align-items: start; /* Align items to the top */
+        }
+
+        .placeholder-box {
+            border: 2px dashed #E0D6FF; /* Lavender dashed border */
+            padding: 2rem;
+            text-align: center;
+            color: #666666;
+            border-radius: 0.5rem;
+            background-color: rgba(224, 214, 255, 0.1); /* Very light lavender background */
+            min-height: 200px;
+            display: flex;
+            flex-direction: column; /* Stack text vertically */
+            justify-content: center;
+            align-items: center;
+        }
+
+        .references ul {
+            list-style-type: none;
+            padding-left: 0;
+            font-size: 0.8rem; /* Smaller font for references */
+            line-height: 1.5;
+            max-height: 50vh; /* Limit height */
+            overflow-y: auto; /* Allow scrolling */
+        }
+        .references li {
+            margin-bottom: 0.5rem;
+            word-break: break-word; /* Break long URLs */
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            #presentation {
+                width: 95vw;
+                height: 90vh;
+            }
+            .slide {
+                padding: 2rem 1.5rem; /* Smaller padding on mobile */
+            }
+            .slide-title {
+                font-size: 1.75rem; /* Smaller title */
+            }
+            .slide-subtitle {
+                font-size: 1.125rem; /* Smaller subtitle */
+            }
+            .slide-content {
+                font-size: 1rem; /* Smaller content text */
+            }
+            .nav-button {
+                padding: 0.5rem 1rem;
+                bottom: 1rem;
+            }
+            #prevBtn { left: 1rem; }
+            #nextBtn { right: 1rem; }
+            #slideCounter { bottom: 1rem; font-size: 0.75rem; }
+            .two-column {
+                grid-template-columns: 1fr; /* Stack columns on smaller screens */
+            }
+            pre code.hljs {
+                font-size: 0.8rem;
+                padding: 0.75rem;
+            }
+        }
+
+    </style>
+</head>
+<body>
+    <div id="presentation">
+        <div class="slide active title-slide">
+            <h1 class="slide-title">The Future of Multimodal AI Applications</h1>
+            <p class="slide-subtitle">Seeing, Hearing, and Interacting with the World in Real-Time</p>
+            <p class="affiliation">
+                <strong>Stefania Druga</strong><br>
+                Research Scientist, Google DeepMind
+            </p>
+             <p class="mt-6 text-sm text-gray-600">Infobip Shift Miami | May 4, 2025</p>
+             <p class="mt-2 text-sm text-gray-500">Honored to be here at Infobip Shift alongside such an incredible lineup of speakers exploring the future of tech. <a href="https://shift.infobip.com/us/schedule/" target="_blank">View Schedule</a></p>
+        </div>
+
+        <div class="slide">
+            <h2 class="slide-title">Beyond Text: AI That Experiences the World</h2>
+            <div class="slide-content">
+                <p class="mb-6">Imagine AI that doesn't just process text, but <strong>experiences</strong> the world alongside us – seeing our experiments, hearing our questions, sensing the environment.</p>
+                <p class="mb-4"><strong>The Limitation of Text-Centric AI:</strong></p>
+                <ul>
+                    <li>Current paradigms often miss the richness of real-world context.</li>
+                    <li>They lack the ability to directly perceive and interact with the physical world.</li>
+                    <li>Why do we need AI that sees, hears, and senses? To build more intuitive, grounded, and truly helpful systems.</li>
+                </ul>
+                <div class="mt-8 p-4 rounded-lg bg-gradient-to-r from-pink-50 via-purple-50 to-green-50 border border-purple-200">
+                    <p class="font-semibold text-black">Quick Example:</p>
+                    <p>Think of an AI tutor not just reading a math problem, but *seeing* where a student makes a mistake on the paper, in real-time.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide">
+            <h2 class="slide-title">Vision: Real-Time Multimodal AI</h2>
+            <div class="slide-content">
+                <p class="mb-6"><strong>My Vision:</strong> AI systems that seamlessly integrate and synthesize information from diverse, real-time data streams:</p>
+                <ul>
+                    <li>Live Webcams & Video Feeds</li>
+                    <li>Audio & Speech</li>
+                    <li>Mobile & Environmental Sensors</li>
+                    <li>Bespoke Hardware Inputs</li>
+                </ul>
+                 <p class="mb-6">These systems understand context, anticipate needs, and respond dynamically through multi-sensory feedback loops.</p>
+
+                <p class="font-semibold text-black mb-2">Agenda for Today (40 mins):</p>
+                <ol class="list-decimal ml-6">
+                    <li>The Core Concept & Challenges</li>
+                    <li>A Blueprint for Multimodal Apps</li>
+                    <li>Case Studies: Bringing it to Life (ChemBuddy, MathMind, Cognimates)</li>
+                    <li>The Future Trajectory</li>
+                </ol>
+                 <p class="mt-4 text-sm text-gray-600"><strong>Context:</strong> My perspective as a Research Scientist at Google DeepMind.</p>
+            </div>
+        </div>
+
+        <div class="slide">
+            <h2 class="slide-title">What is Real-Time Multimodal AI?</h2>
+            <div class="slide-content">
+                <p class="mb-4"><strong>Multimodal AI:</strong> Systems processing and integrating information from diverse data types (vision, audio, text, sensors, etc.) simultaneously.</p>
+                <p class="mb-6"><strong>Why Real-Time?</strong> Low latency is crucial for:</p>
+                <ul>
+                    <li><strong>Interaction:</strong> Fluid conversations, immediate feedback.</li>
+                    <li><strong>Responsiveness:</strong> Systems that react instantly to changing environments (e.g., robotics, autonomous systems).</li>
+                    <li><strong>Engagement:</strong> Maintaining user focus and flow in educational or creative tools.</li>
+                </ul>
+                <div class="mt-8 p-4 rounded-lg bg-gradient-to-r from-pink-50 via-purple-50 to-green-50 border border-purple-200">
+                    <p class="font-semibold text-black">Think of it like human perception:</p>
+                    <p>We seamlessly combine what we see, hear, and feel to understand and react to the world in the moment.</p>
+                </div>
+            </div>
+        </div>
+
+         <div class="slide">
+            <h2 class="slide-title">Key Technical Challenges</h2>
+            <div class="slide-content two-column">
+                <div>
+                    <strong class="text-lg block mb-2 bg-gradient-to-r from-pink-400 via-purple-400 to-green-400 text-transparent bg-clip-text">1. Data Fusion</strong>
+                    <p>How do we meaningfully combine signals from different sources (pixels, sound waves, sensor readings, text)?</p>
+                    <p class="text-sm text-gray-600 mt-1">Analogy: Translating between different languages simultaneously while understanding the combined meaning.</p>
+                </div>
+                <div>
+                    <strong class="text-lg block mb-2 bg-gradient-to-r from-pink-400 via-purple-400 to-green-400 text-transparent bg-clip-text">2. Latency Reduction</strong>
+                    <p>How do we process multiple complex data streams fast enough for real-time interaction?</p>
+                     <p class="text-sm text-gray-600 mt-1">Analogy: Ensuring a video call doesn't lag, even with complex background effects running.</p>
+                </div>
+                 <div>
+                    <strong class="text-lg block mb-2 bg-gradient-to-r from-pink-400 via-purple-400 to-green-400 text-transparent bg-clip-text">3. Context Modeling</strong>
+                    <p>How does the AI maintain a coherent understanding of the situation as it unfolds across modalities?</p>
+                     <p class="text-sm text-gray-600 mt-1">Analogy: Remembering the beginning of a conversation while also noticing someone's changing facial expression.</p>
+                </div>
+                 <div>
+                    <strong class="text-lg block mb-2 bg-gradient-to-r from-pink-400 via-purple-400 to-green-400 text-transparent bg-clip-text">4. Interaction Design</strong>
+                    <p>How do we design intuitive ways for users to interact using multiple inputs (voice, gesture, touch, etc.)?</p>
+                    <p class="text-sm text-gray-600 mt-1">Analogy: Designing a car dashboard that seamlessly integrates touch, voice, and physical controls.</p>
+                </div>
+            </div>
+             <p class="mt-8 text-center text-gray-700">These challenges require innovations in architecture, algorithms, and system design.</p>
+        </div>
+
+        <div class="slide">
+            <h2 class="slide-title">A Blueprint for Multimodal Apps</h2>
+            <div class="slide-content two-column">
+                 <div>
+                    <p class="mb-4">Let's visualize the core components of an interactive multimodal system:</p>
+                    <ul>
+                        <li><strong>Instructions/Input:</strong> User commands via text, voice, gestures, code blocks.</li>
+                        <li><strong>Context:</strong> Sensory data (camera, mic, sensors), interaction history, world state.</li>
+                        <li><strong>Grounding:</strong> Connecting abstract instructions to the real-time context (what does "this" refer to?).</li>
+                        <li><strong>Execution/AI Core:</strong> The multimodal model processing fused data, reasoning, generating responses/actions.</li>
+                        <li><strong>Output/Feedback:</strong> Actions in the environment, generated code, text/speech responses, visual feedback.</li>
+                         <li><strong>Code Editor/Environment:</strong> The application interface where interaction occurs.</li>
+                    </ul>
+                    <p>These blocks work together in a continuous loop, addressing the challenges of fusion, latency, and context.</p>
+                </div>
+                <div class="placeholder-box">
+                    <p>[Placeholder for High-Quality "Building Blocks" Diagram]</p>
+                    <p class="text-sm mt-2">(Visualize a flow diagram showing Input -> Context -> Grounding -> AI Core -> Output -> Interface, with arrows indicating the interaction loop)</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide">
+            <h2 class="slide-title">Case Studies: Bringing the Blueprint to Life</h2>
+            <div class="slide-content">
+                <p class="text-xl text-center">Let's see how this blueprint applies in practice with three examples from our research...</p>
+                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12">
+                    <div class="p-6 rounded-lg bg-gradient-to-br from-pink-100 to-purple-100 text-center shadow-md">
+                        <h3 class="font-semibold text-lg mb-2 text-black">ChemBuddy</h3>
+                        <p class="text-sm text-gray-700">Making abstract chemistry tangible through real-time sensing and interaction.</p>
+                    </div>
+                     <div class="p-6 rounded-lg bg-gradient-to-br from-purple-100 to-green-100 text-center shadow-md">
+                        <h3 class="font-semibold text-lg mb-2 text-black">MathMind</h3>
+                        <p class="text-sm text-gray-700">Visually identifying and addressing mathematical misconceptions on the fly.</p>
+                    </div>
+                     <div class="p-6 rounded-lg bg-gradient-to-br from-green-100 to-pink-100 text-center shadow-md">
+                        <h3 class="font-semibold text-lg mb-2 text-black">Cognimates Copilot</h3>
+                        <p class="text-sm text-gray-700">Supporting creative coding beyond text with multimodal assistance.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide">
+            <h2 class="slide-title">Case Study 1: ChemBuddy</h2>
+             <h3 class="slide-subtitle">Making Abstract Chemistry Tangible</h3>
+            <div class="slide-content two-column">
+                <div>
+                    <strong class="text-lg block mb-2 text-black">The Need:</strong>
+                    <ul>
+                        <li>Chemistry concepts (pH, temperature changes, reactions) can be abstract for middle schoolers.</li>
+                        <li>Traditional labs lack immediate, intelligent feedback linking observations to concepts.</li>
+                    </ul>
+                     <strong class="text-lg block mb-2 mt-6 text-black">The Multimodal Approach:</strong>
+                    <ul>
+                        <li><strong>Vision (Webcam):</strong> Sees the experiment setup, color changes, physical state.</li>
+                        <li><strong>Sensors (Jacdac):</strong> Measures real-time data (temperature, pH, conductivity).</li>
+                        <li><strong>Interaction (Mic/Chat):</strong> Students ask questions, AI provides guidance and explanations.</li>
+                        <li><strong>Fusion:</strong> AI connects visual observations, sensor readings, and student queries to provide contextual, safety-aware feedback.</li>
+                    </ul>
+                </div>
+                 <div class="placeholder-box">
+                    <p>[Placeholder for ChemBuddy Interface Screenshot or Concept Art]</p>
+                     <p class="text-sm mt-2">(Show a visual of a student interacting with an experiment, webcam, sensors, and a chat interface)</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide">
+            <h2 class="slide-title">ChemBuddy: Implementation & Insight</h2>
+            <div class="slide-content">
+                <strong class="text-lg block mb-2 text-black">Implementation Highlight: Real-time Loop (Core Logic)</strong>
+                <p class="mb-2">Using WebSockets, the client sends sensor/image data; the server fuses it and calls the AI for immediate feedback.</p>
+                <pre><code class="language-javascript">// Client: Send multimodal update via WebSocket
+function sendUpdate(text, imageBlob, sensorData) {
+  const payload = { text, sensorContext: formatSensorData(sensorData), hasImage: !!imageBlob };
+  socket.send(JSON.stringify({ type: 'chat_message_request', payload }));
+  if (imageBlob) socket.send(imageBlob); // Send binary image after JSON
+}
+
+// Server: Handle WebSocket message
+socket.on('message', async (message) => {
+  if (message instanceof Buffer) { // Image data received
+    const imageBase64 = message.toString('base64');
+    // Combine with pending text/sensor data
+    const { text, sensorContext } = getPendingDataForClient(socket.clientId);
+    // --> Call Multimodal AI (Gemini) with text, imageBase64, sensorContext
+    const aiResponse = await callGeminiApi({ text, imageBase64, sensorContext });
+    socket.send(JSON.stringify({ type: 'ai_response', payload: { text: aiResponse } }));
+  } else { // Text/JSON data received
+    const data = JSON.parse(message.toString());
+    if (data.payload.hasImage) {
+      storePendingDataForClient(socket.clientId, data.payload); // Wait for image
+    } else {
+      // --> Call Multimodal AI (Gemini) with text, null image, sensorContext
+      const aiResponse = await callGeminiApi(data.payload);
+      socket.send(JSON.stringify({ type: 'ai_response', payload: { text: aiResponse } }));
+    }
+  }
+});</code></pre>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+                     <div class="placeholder-box">
+                        <p>[Placeholder for LIVE DEMO Snippet]</p>
+                        <p class="text-sm mt-2">(Focus: Show sensor reading change triggering specific AI feedback related to the visual context)</p>
+                    </div>
+                    <div>
+                        <strong class="text-lg block mb-2 text-black">Key Insight/Finding:</strong>
+                        <p>Integrating real-time sensor data significantly improved the AI's ability to provide relevant, safety-conscious, and conceptually accurate guidance during experiments. It grounds the conversation in the physical reality of the lab.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide">
+            <h2 class="slide-title">Case Study 2: MathMind</h2>
+            <h3 class="slide-subtitle">Visually Identifying Math Misconceptions</h3>
+             <div class="slide-content two-column">
+                <div>
+                    <strong class="text-lg block mb-2 text-black">The Need:</strong>
+                    <ul>
+                        <li>Identifying specific errors in handwritten algebraic work is time-consuming for teachers.</li>
+                        <li>Students often don't realize *where* they went wrong.</li>
+                        <li>Generic feedback isn't as effective as targeted guidance.</li>
+                    </ul>
+                     <strong class="text-lg block mb-2 mt-6 text-black">The Multimodal Approach:</strong>
+                    <ul>
+                        <li><strong>Vision (Webcam/Upload):</strong> Captures an image of the student's handwritten work.</li>
+                         <li><strong>AI Analysis (VLM):</strong> A vision-language model analyzes the image to:
+                            <ul>
+                                <li>Read the steps (OCR).</li>
+                                <li>Identify mathematical errors/misconceptions based on a predefined taxonomy.</li>
+                                <li>Pinpoint the location of the error.</li>
+                            </ul>
+                         </li>
+                        <li><strong>Interaction (Interface):</strong> Presents targeted feedback and suggests personalized practice exercises based on the specific misconception detected.</li>
+                    </ul>
+                </div>
+                 <div class="placeholder-box">
+                    <p>[Placeholder for MathMind Interface Screenshot]</p>
+                     <p class="text-sm mt-2">(Show an image of student work being analyzed, with feedback highlighted)</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide">
+            <h2 class="slide-title">MathMind: Implementation & Insight</h2>
+            <div class="slide-content">
+                 <strong class="text-lg block mb-2 text-black">Implementation Highlight: Vision Analysis Workflow (Core Logic)</strong>
+                 <p class="mb-2">Send the image and a task-specific prompt (including misconception taxonomy) to a Vision Language Model.</p>
+                <pre><code class="language-javascript">// Client: Call backend API to analyze image
+async function analyzeMathWork(imageBase64) {
+  const response = await fetch('/api/analyze', { /* POST imageBase64 */ });
+  const analysis = await response.json();
+  displayFeedback(analysis); // Show results in UI
+}
+
+// Server: Process request and call AI
+app.post('/api/analyze', async (req, res) => {
+  const { imageBase64 } = req.body;
+  const model = getGeminiVisionModel(); // e.g., gemini-1.5-pro
+
+  // Prepare parts for Gemini API
+  const imagePart = { inlineData: { mimeType: 'image/jpeg', data: imageBase64 } };
+  const textPart = { text: MATH_MISCONCEPTION_PROMPT }; // Prompt includes taxonomy
+
+  // --> Call Gemini Vision API
+  const result = await model.generateContent([textPart, imagePart]);
+  const analysis = parseAnalysisResponse(result.response.text()); // Parse JSON response
+
+  res.json(analysis); // Send structured results back
+});</code></pre>
+                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+                     <div class="placeholder-box">
+                        <p>[Placeholder for LIVE DEMO Snippet]</p>
+                        <p class="text-sm mt-2">(Focus: Show uploading an image with an error, and the system correctly identifying the specific misconception type and location)</p>
+                    </div>
+                    <div>
+                        <strong class="text-lg block mb-2 text-black">Key Insight/Finding:</strong>
+                        <p>Direct visual analysis of student work allows for highly specific and timely misconception detection, enabling the generation of truly personalized feedback and practice, far exceeding generic hints.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+         <div class="slide">
+            <h2 class="slide-title">Case Study 3: Cognimates Copilot</h2>
+             <h3 class="slide-subtitle">Multimodal Assistance for Creative Coding</h3>
+             <div class="slide-content two-column">
+                <div>
+                    <strong class="text-lg block mb-2 text-black">The Need:</strong>
+                    <ul>
+                        <li>Block-based coding (like Scratch) is great, but learners can get stuck.</li>
+                        <li>Text-based help isn't always ideal for visual programming environments.</li>
+                        <li>Generating creative assets (sprites, backgrounds) can be a barrier.</li>
+                    </ul>
+                     <strong class="text-lg block mb-2 mt-6 text-black">The Multimodal Approach:</strong>
+                     <ul>
+                        <li><strong>Interaction (Blocks/Text/Image):</strong> User interacts within a Scratch-like interface, types prompts, or potentially provides image inputs.</li>
+                        <li><strong>AI Copilot (LLM/VLM):</strong> An AI assistant (e.g., using Gemini) provides:
+                            <ul>
+                                <li>Code suggestions/debugging help (understanding block context).</li>
+                                <li>Explanation of concepts.</li>
+                                <li>Generation of creative assets (images/sprites) based on text prompts.</li>
+                                <li>Background removal for generated assets.</li>
+                            </ul>
+                         </li>
+                         <li><strong>Feedback (Interface):</strong> Suggestions appear as blocks, text explanations, or generated images directly within the coding environment.</li>
+                    </ul>
+                </div>
+                 <div class="placeholder-box">
+                    <p>[Placeholder for Cognimates Interface Screenshot]</p>
+                     <p class="text-sm mt-2">(Show a block-coding interface with an AI chat/suggestion panel, possibly showing a generated sprite)</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide">
+            <h2 class="slide-title">Cognimates Copilot: Implementation & Insight</h2>
+            <div class="slide-content">
+                 <strong class="text-lg block mb-2 text-black">Implementation Highlight: AI Call & Response Parsing (Core Logic)</strong>
+                 <p class="mb-2">User input triggers an AI call; the response (text, code, or image data) is parsed and integrated back into the coding environment.</p>
+                <pre><code class="language-javascript">// Core logic when user asks for help or an asset
+async function handleUserInput(prompt, context) {
+  // --> 1. Call AI Model (e.g., Gemini) with prompt and context
+  const aiResponse = await callAIModelAPI(prompt, context);
+
+  // 2. Parse response to determine type (text, code, image)
+  const parsed = parseAIResponse(aiResponse);
+
+  // 3. Integrate back into UI
+  if (parsed.type === 'image_asset') {
+    // --> Optional: Call background removal API/library
+    const finalImage = await removeBackground(parsed.imageBase64);
+    displayImageAsset(finalImage); // Add to Scratch assets
+  } else if (parsed.type === 'code_suggestion') {
+    displayCodeSuggestion(parsed.codeBlocks); // Show blocks in UI
+  } else {
+    displayExplanation(parsed.text); // Show text in chat
+  }
+}</code></pre>
+                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+                     <div class="placeholder-box">
+                        <p>[Placeholder for LIVE DEMO Snippet]</p>
+                        <p class="text-sm mt-2">(Focus: Show typing a prompt like "create a friendly robot sprite", the AI generating it, removing the background, and adding it to the asset library)</p>
+                    </div>
+                    <div>
+                        <strong class="text-lg block mb-2 text-black">Key Insight/Finding:</strong>
+                        <p>Multimodal copilots can significantly lower barriers to creative expression in coding by offering contextual help and asset generation directly within the workflow, moving beyond simple text-based assistance.</p>
+                         <p class="mt-2 text-sm text-gray-600">Ethical Touchpoint: Important to consider user agency and avoid over-reliance, ensuring the AI assists rather than dictates the creative process.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide">
+            <h2 class="slide-title">The Future Trajectory: Beyond Today's Examples</h2>
+            <div class="slide-content">
+                <p class="mb-6">The principles behind ChemBuddy, MathMind, and Cognimates point towards a broader future for real-time multimodal AI:</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="p-4 rounded-lg bg-gradient-to-r from-pink-50 via-purple-50 to-green-50 border border-purple-200">
+                        <strong class="text-black">Personalized Assistance:</strong> AI that understands your context (location, activity, health sensors) to offer proactive help.
+                    </div>
+                     <div class="p-4 rounded-lg bg-gradient-to-r from-pink-50 via-purple-50 to-green-50 border border-purple-200">
+                        <strong class="text-black">Accessibility Tools:</strong> Systems translating visual information into audio/haptic feedback, or vice-versa, in real-time.
+                    </div>
+                     <div class="p-4 rounded-lg bg-gradient-to-r from-pink-50 via-purple-50 to-green-50 border border-purple-200">
+                        <strong class="text-black">Robotics:</strong> Robots that perceive, understand, and interact with the physical world more naturally and safely.
+                    </div>
+                     <div class="p-4 rounded-lg bg-gradient-to-r from-pink-50 via-purple-50 to-green-50 border border-purple-200">
+                        <strong class="text-black">Creative Tools:</strong> AI partners that collaborate through sketches, gestures, voice, and code.
+                    </div>
+                     <div class="p-4 rounded-lg bg-gradient-to-r from-pink-50 via-purple-50 to-green-50 border border-purple-200">
+                        <strong class="text-black">Enhanced Learning:</strong> Truly adaptive educational experiences that respond to diverse learning styles and real-time understanding.
+                    </div>
+                     <div class="p-4 rounded-lg bg-gradient-to-r from-pink-50 via-purple-50 to-green-50 border border-purple-200">
+                        <strong class="text-black">Human-AI Collaboration:</strong> Moving towards richer, more intuitive partnerships where AI complements human abilities through shared perception.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide">
+            <h2 class="slide-title">Enabling Richer Human-AI Collaboration</h2>
+            <div class="slide-content">
+                <p class="mb-6 text-lg">Multimodal AI represents a fundamental shift – moving from AI that processes information *about* the world to AI that can participate *in* the world alongside us.</p>
+
+                <strong class="block mb-2 text-xl text-black">Researcher's Perspective (Google DeepMind):</strong>
+                <blockquote class="mt-4 pl-4 border-l-4 border-purple-300 italic text-gray-700">
+                    "One of the most exciting frontiers is developing models that not only fuse data but build robust internal representations of the world that persist and update over time, much like humans do. Tackling challenges like long-term context, causal reasoning across modalities, and ensuring safe, reliable real-world interaction remains a core focus of our research."
+                </blockquote>
+
+                 <strong class="block mt-8 mb-2 text-xl text-black">Call to Action & Inspiration:</strong>
+                <ul class="list-disc ml-6">
+                    <li><strong>Think Multimodally:</strong> How can integrating diverse data streams enhance your own work or products?</li>
+                    <li><strong>Experiment:</strong> Leverage available tools and platforms to explore multimodal capabilities.</li>
+                    <li><strong>Consider the Interaction:</strong> How can we design systems that feel natural and intuitive across different senses?</li>
+                </ul>
+                 <p class="mt-6">Let's build AI that leverages a richer understanding of our shared physical world.</p>
+            </div>
+        </div>
+
+         <div class="slide title-slide">
+            <h2 class="slide-title">Thank You & Q&A</h2>
+             <p class="slide-subtitle">Let's Discuss the Future of Multimodal AI</p>
+
+            <div class="mt-8 text-lg text-black">
+                <p>Stefania Druga</p>
+                <p>Research Scientist, Google DeepMind</p>
+                <p class="mt-4">Contact/Links: [Your Contact Info / Linktree / Project Page Here]</p>
+                <p>Conference Schedule: <a href="https://shift.infobip.com/us/schedule/" target="_blank">shift.infobip.com/us/schedule/</a></p>
+            </div>
+
+             <p class="mt-12 text-gray-600">It's been a pleasure sharing these ideas. Looking forward to the conversations this week with all the brilliant minds gathered here at Infobip Shift – truly inspiring company!</p>
+
+             <div class="slide-footer mt-12">
+                References available upon request or link [Optional: Add Link to References Doc]
+            </div>
+        </div>
+
+        <div class="slide references">
+             <h2 class="slide-title">References</h2>
+             <div class="slide-content">
+                <p class="text-sm mb-4">(Selected references based on provided documents - list can be expanded)</p>
+                <ul>
+                    <li>ArXiv. (2024). Multimodality of AI for Education: Towards Artificial General Intelligence.</li>
+                    <li>ArXiv. (2024). Multimodal Alignment and Fusion: A Survey.</li>
+                     <li>Cartesia Raises $27 Million to Build the Next Generation of Real-Time AI Models - PRWeb (2025)</li>
+                    <li>GM Insights. (2025). Multimodal AI Market Size & Share, Statistics Report 2025-2034.</li>
+                     <li>LiveKit Blog. (2024). An open source stack for real-time multimodal AI.</li>
+                    <li>MIT Technology Review. (2024). Multimodal: AI's new frontier.</li>
+                     <li>Mobius Labs - Efficient Multimodal AI for Enterprise Applications (EliteAI Tools)</li>
+                    <li>Multimodal Fusion Artificial Intelligence Model to Predict Risk for MACE and Myocarditis... (PMC, 2024)</li>
+                    <li>Nature. (2025). On opportunities and challenges of large multimodal foundation models in education.</li>
+                     <li>NVIDIA Riva - Speech and Translation AI (NVIDIA)</li>
+                     <li>ResearchGate. (2025). SmolVLM: Redefining small and efficient multimodal models.</li>
+                    <li>Science Direct. (2025). Taking the next step with generative artificial intelligence: The transformative role of multimodal large language models in science education.</li>
+                     <li>U.S. Department of Education. (2024). AI Report.</li>
+                     <li>World Economic Forum. (2024). The future of learning: AI is revolutionizing education 4.0.</li>
+                     <li>Zilliz. (2024). Top 10 Multimodal AI Models of 2024.</li>
+                     <li>Druga, S. et al. (Relevant publications for ChemBuddy, MathMind, Cognimates - *Add Specific Citations*)</li>
+
+                </ul>
+             </div>
+        </div>
+
+
+        <button id="prevBtn" class="nav-button" onclick="changeSlide(-1)">Prev</button>
+        <button id="nextBtn" class="nav-button" onclick="changeSlide(1)">Next</button>
+        <div id="slideCounter"></div>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length; // Adjust if references slide is hidden by default
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const slideCounter = document.getElementById('slideCounter');
+
+        function showSlide(index) {
+            // Remove active class from all slides
+            slides.forEach(slide => slide.classList.remove('active'));
+            // Add active class to the current slide
+            slides[index].classList.add('active');
+            // Update slide counter
+            slideCounter.textContent = `${index + 1} / ${totalSlides}`;
+            // Update button states
+            prevBtn.disabled = index === 0;
+            nextBtn.disabled = index === totalSlides - 1;
+
+            // Re-apply syntax highlighting to the new active slide
+            const activeSlideCodeBlocks = slides[index].querySelectorAll('pre code');
+            activeSlideCodeBlocks.forEach((block) => {
+                hljs.highlightElement(block);
+            });
+        }
+
+        function changeSlide(direction) {
+            const newSlideIndex = currentSlide + direction;
+            if (newSlideIndex >= 0 && newSlideIndex < totalSlides) {
+                currentSlide = newSlideIndex;
+                showSlide(currentSlide);
+            }
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'ArrowRight' || event.key === ' ') { // Next slide on Right Arrow or Space
+                // Prevent space bar from scrolling the page if slide content is long
+                if (event.key === ' ') event.preventDefault();
+                changeSlide(1);
+            } else if (event.key === 'ArrowLeft') { // Previous slide on Left Arrow
+                changeSlide(-1);
+            }
+        });
+
+        // Initial setup
+        // Initialize highlight.js on all code blocks initially
+        document.addEventListener('DOMContentLoaded', (event) => {
+            document.querySelectorAll('pre code').forEach((block) => {
+                hljs.highlightElement(block);
+            });
+            // Then show the first slide (which will re-highlight its blocks)
+            showSlide(currentSlide);
+        });
+
+        // Optional: Hide References slide initially if desired
+        // Uncomment the following line to start without showing the reference slide by default
+        // const totalSlides = slides.length - 1; // Adjust total count if hiding last slide
+        // showSlide(currentSlide); // Re-render counter and buttons
+    </script>
+</body>
+</html>
