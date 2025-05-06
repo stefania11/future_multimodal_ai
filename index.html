@@ -526,7 +526,7 @@
         <section class="slide gradient-bg">
             <div class="slide-content">
                 <h2 class="mb-6">Case Studies</h2>
-                <p class="text-center text-xl mb-12">Let's see how this blueprint applies in practice with examples from our research...</p>
+                <p class="text-xl text-center mb-12">Let's see how this blueprint applies in practice with examples from our research...</p>
                  <div class="grid-layout grid-cols-1 md:grid-cols-2 gap-6">
                     <div class="card blue">
                         <h3 class="text-2xl mb-2">Gemini Smart Home</h3>
@@ -910,15 +910,55 @@ async function handleUserInput(prompt, context) {
             </div>
         </section>
 
-      
         <section class="slide">
             <div class="slide-content">
+                <h2>Tackling Real-Time Challenges: Latency & Synchronization</h2>
+                <p class="text-xl mb-6">Real-time multimodal systems require overcoming critical engineering hurdles:</p>
+                <div class="flex flex-col space-y-6">
+                    <div class="grid-layout grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="card blue">
+                            <h3>Low Latency</h3>
+                            <ul class="list-disc pl-5 space-y-1">
+                                <li>Efficient Models (SmolVLM, SSMs)</li>
+                                <li>Optimized Inference (TensorRT-LLM, MLX)</li>
+                                <li>Quantization (4-bit, FP8)</li>
+                                <li>Edge Computing & Asynchronous Processing</li>
+                                <li>API Optimization (Batching, Caching)</li>
+                            </ul>
+                            <p class="mt-2"><strong>Goal:</strong> Minimize delay for interactive experiences (e.g., &lt;100ms).</p>
+                        </div>
+                        <div class="card green">
+                            <h3>Data Synchronization</h3>
+                            <p>Crucial for coherent understanding (e.g., 32-45ms window)</p>
+                            <ul class="list-disc pl-5 space-y-1">
+                                <li>Algorithms: Time/Feature/Model-based Alignment</li>
+                                <li>Adaptive Temporal Mapping (Handles Jitter)</li>
+                                <li>Cross-Modal Correlation Detection</li>
+                                <li>Unified Data Platforms (Minimize Integration Sync Issues)</li>
+                            </ul>
+                             <p class="mt-2"><strong>Goal:</strong> Ensure temporal alignment across streams despite network variability.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="slide">
+            <div class="slide-content">
+                <h2>Latency & Synchronization</h2>
+                <img src="latency_sync.png" alt="Graph showing latency spikes and synchronization" class="rounded-lg shadow-lg object-contain max-h-[50vh]">
+                <img src="cloud_vs_edge.png" alt="Cloud vs Edge" class="rounded-lg shadow-lg object-contain max-h-[50vh]">
+                <p class="mt-2"><strong>Goal:</strong> Ensure temporal alignment across streams despite network variability.</p>
+            </div>
+        </section>
+
+         <section class="slide title-slide gradient-bg">
+            <div class="slide-content">
                 <h2>Evaluating Multimodal Apps: Benchmarks & Strategies</h2>
-                <p>Assessing the capabilities and reliability of multimodal applications requires diverse evaluation methods:</p>
-                <div class="grid-layout grid-cols-1 md:grid-cols-2 gap-6 items-start">
+                <p class="text-xl mb-6">Assessing the capabilities and reliability of multimodal applications requires diverse evaluation methods:</p>
+                <div class="grid-layout grid-cols-1 md:grid-cols-2 gap-6">
                     <div class="card pink">
                         <h3>Key Benchmarks</h3>
-                        <ul class="list-disc pl-5 space-y-1">
+                        <ul>
                             <li>MMMU, MathVista, MMStar (General)</li>
                             <li>DocVQA, TextVQA (Documents)</li>
                             <li>Video-MME, CinePile (Video)</li>
@@ -928,7 +968,7 @@ async function handleUserInput(prompt, context) {
                     </div>
                     <div class="card purple">
                         <h3>Testing Strategies</h3>
-                        <ul class="list-disc pl-5 space-y-1">
+                        <ul>
                             <li>Component & End-to-End Testing</li>
                             <li>Real-world Scenario Simulation</li>
                             <li>Robustness Testing (Noise, Adversarial)</li>
@@ -938,7 +978,30 @@ async function handleUserInput(prompt, context) {
                          <p class="mt-2">Ensuring reliability beyond standard metrics.</p>
                     </div>
                 </div>
-                <p class="text-center">Challenges include metrics reflecting real user experience and testing complex interactions.</p>
+            </div>
+        </section>
+
+        <!-- NEW SLIDE: Domain-Specific Evaluation -->
+        <section class="slide">
+            <div class="slide-content">
+                <h2>Beyond General Benchmarks: Domain-Specific Evaluation</h2>
+                <p class="text-xl mb-6">While general benchmarks are useful, truly understanding co-scientist performance requires evaluation tailored to specific application areas and user goals.</p>
+                <div class="two-column-layout items-center gap-8">
+                    <div>
+                        <strong class="text-xl block mb-2 text-black">Why Domain-Specific?</strong>
+                        <ul class="list-disc pl-5 space-y-1">
+                            <li>Captures nuances missed by broad tests.</li>
+                            <li>Aligns evaluation with real-world tasks and workflows.</li>
+                            <li>Allows measurement of context-specific understanding (e.g., scientific misconceptions, coding patterns).</li>
+                            <li>Provides more actionable insights for improvement.</li>
+                        </ul>
+                        <strong class="text-xl block mt-4 mb-2 text-black">Example: Math & Science Education</strong>
+                        <p>Developing benchmarks specifically focused on identifying and addressing common mathematical or scientific misconceptions demonstrated by students.</p>
+                    </div>
+                    <div class="flex justify-center items-center">
+                        <img src="eval_mathmind 2.png" alt="MathMind Evaluation Example showing student work analysis" class="rounded-lg shadow-lg object-contain max-h-[55vh]">
+                    </div>
+                </div>
             </div>
         </section>
 
@@ -967,13 +1030,13 @@ async function handleUserInput(prompt, context) {
         </section>
         <section class="slide">
             <div class="slide-content">
-                <h2>AI Assistants Evaluation: A User-Centered Framework</h2>
+                <h2>Standardizing AI Tutor Evaluation: A Pedagogical Framework</h2>
                 <p>https://github.com/kaushal0494/UnifyingAITutorEvaluation</p>
                 <p class="text-lg mb-4">The <a href="https://github.com/kaushal0494/UnifyingAITutorEvaluation" target="_blank" class="text-purple-600 hover:underline">Unifying AI Tutor Evaluation</a> framework proposes a taxonomy to assess the pedagogical abilities of LLM-based tutors across key dimensions.</p>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
                     <!-- Left Column: Image and Description -->
                     <div class="space-y-4">
-                         <p>This structured approach uses a detailed JSON format to capture assistant responses and annotate them across dimensions like mistake identification, guidance quality, coherence, and tone.</p>
+                         <p>This structured approach uses a detailed JSON format to capture tutor responses and annotate them across dimensions like mistake identification, guidance quality, coherence, and tone.</p>
                          <img src="evaluation.png" alt="Diagram illustrating the AI Tutor Evaluation Framework components" class="rounded-lg shadow-lg object-contain max-h-[45vh] mt-4">
                     </div>
                     <!-- Right Column: Simplified JSON Structure -->
@@ -1060,25 +1123,12 @@ async function handleUserInput(prompt, context) {
                          <p class="mt-2"><strong>Goal:</strong> Ensure temporal alignment across streams despite network variability.</p>
                     </div>
                 </div>
-            </div>
-        </section>
-
-        <section class="slide">
-            <div class="slide-content">
-                <h2>Tackling Real-Time Challenges: Latency & Synchronization</h2>
-                <p>Real-time multimodal systems require overcoming critical engineering hurdles:</p>
-                <div class="flex justify-between items-center gap-8 mb-4">
-                    <div class="w-1/2 flex justify-center">
-                        <img src="latency_sync.png" alt="Graph showing latency spikes and synchronization" class="rounded-lg shadow-lg object-contain max-h-[45vh]">
-                    </div>
-                    <div class="w-1/2 flex justify-center">
-                        <img src="cloud_vs_edge.png" alt="Cloud vs Edge" class="rounded-lg shadow-lg object-contain max-h-[45vh]">
-                    </div>
+                <div class="image-container mt-6">
+                    <img src="latency_sync.png" alt="Latency and Synchronization Challenges" class="rounded-lg shadow-lg object-contain max-h-[35vh]">
+                    <p class="image-caption">Visualizing the complexities of latency and synchronization.</p>
                 </div>
-                <p class="mt-2"><strong>Goal:</strong> Ensure temporal alignment across streams despite network variability.</p>
             </div>
         </section>
-
 
         <!-- New Slide 3: Parallel Processing -->
         <section class="slide gradient-bg">
@@ -1098,12 +1148,47 @@ async function handleUserInput(prompt, context) {
                     </div>
                     <div class="image-container">
                         <img src="parallel_processing.png" alt="Parallel Processing Diagram" class="rounded-lg shadow-lg object-contain max-h-[50vh]">
+                        <p class="image-caption">Conceptual model of parallel data stream processing.</p>
                     </div>
                 </div>
             </div>
         </section>
 
-
+        <!-- New Slide 4: Evaluation -->
+        <section class="slide">
+            <div class="slide-content">
+                <h2>Evaluating Multimodal Systems & Benchmarks</h2>
+                <p>Assessing performance requires comprehensive benchmarks and rigorous testing:</p>
+                 <div class="grid-layout grid-cols-1 md:grid-cols-2 gap-6 items-start">
+                     <div class="card pink">
+                        <h3>Key Benchmarks</h3>
+                        <ul class="list-disc pl-5 space-y-1">
+                            <li>MMMU, MathVista, MMStar (General)</li>
+                            <li>DocVQA, TextVQA (Documents)</li>
+                            <li>Video-MME, CinePile (Video)</li>
+                            <li>Domain-Specific (e.g., Healthcare, Robotics)</li>
+                        </ul>
+                        <p class="mt-2">Evaluating capabilities across diverse tasks and modalities.</p>
+                    </div>
+                    <div class="card purple">
+                        <h3>Testing Strategies</h3>
+                        <ul class="list-disc pl-5 space-y-1">
+                            <li>Component & End-to-End Testing</li>
+                            <li>Real-world Scenario Simulation</li>
+                            <li>Robustness Testing (Noise, Adversarial)</li>
+                            <li>Monitoring & Feedback Loops in Deployment</li>
+                            <li>Measuring Latency, Throughput, Resource Use</li>
+                        </ul>
+                         <p class="mt-2">Ensuring reliability beyond standard metrics.</p>
+                    </div>
+                </div>
+                 <div class="image-container grid grid-cols-2 gap-4 mt-6">
+                    <img src="evaluation.png" alt="Evaluation Metrics" class="rounded-lg shadow-lg object-contain max-h-[30vh]">
+                    <img src="copilot_evaluation_benchmark.png" alt="Copilot Benchmark Example" class="rounded-lg shadow-lg object-contain max-h-[30vh]">
+                </div>
+                <p class="text-center">Challenges include metrics reflecting real user experience and testing complex interactions.</p>
+            </div>
+        </section>
 
         <!-- New Slide 5: User Testing -->
         <section class="slide gradient-bg">
@@ -1124,13 +1209,39 @@ async function handleUserInput(prompt, context) {
                     </div>
                     <!-- Image Column -->
                     <div class="flex justify-center items-center"> 
-                        <img src="user_research.png" alt="User Research and Testing Cycle Diagram" class="rounded-lg shadow-lg object-contain max-h-[50vh]"> 
+                        <img src="user_testing.png" alt="User Research and Testing Cycle Diagram" class="rounded-lg shadow-lg object-contain max-h-[50vh]"> 
                     </div>
                 </div>
             </div>
         </section>
 
-       
+        <!-- New Slide 6: Emerging Apps -->
+        <section class="slide">
+            <div class="slide-content">
+                <h2>Emerging Applications: Beyond the Desktop</h2>
+                <p>Real-time multimodal AI is enabling new experiences in physical and immersive environments:</p>
+                <div class="grid-layout grid-cols-1 md:grid-cols-3 gap-4">
+                    <div class="card pink">
+                        <h3>Extended Reality (XR)</h3>
+                        <p>Enhanced interaction via gesture/gaze understanding, immersive training, context-aware agents (e.g., Meta Ray-Ban AI).</p>
+                    </div>
+                    <div class="card purple">
+                        <h3>Robotics</h3>
+                        <p>Improved HRI (non-verbal cues), robust navigation (sensor fusion), semantic scene understanding for complex tasks.</p>
+                    </div>
+                     <div class="card green">
+                        <h3>Smart Cities/IoT</h3>
+                        <p>Intelligent transportation (dynamic routing), public safety (anomaly detection), environmental monitoring using diverse sensor networks.</p>
+                    </div>
+                </div>
+                <div class="image-container mt-6">
+                    <img src="google_home_gemini_extension_2.webp" alt="Google Home Gemini Extension Example" class="rounded-lg shadow-lg object-contain max-h-[40vh]">
+                    <p class="image-caption">Example: Integrating powerful multimodal models into home devices.</p>
+                </div>
+                <p class="text-center">Also impacting Healthcare (Diagnostics), Finance (Fraud Detection), Retail (Personalization), and more.</p>
+            </div>
+        </section>
+
         <!-- New Slide: Material Science -->
         <section class="slide gradient-bg">
             <div class="slide-content text-center">
@@ -1178,7 +1289,7 @@ async function handleUserInput(prompt, context) {
         <!-- New Slide 7: Synthetic Data/Custom -->
         <section class="slide gradient-bg">
             <div class="slide-content">
-                <h2>Synthetic Data for Evaluation & Fine-tuning</h2>
+                <h2>Training & Customization: Synthetic Data & Fine-tuning</h2>
                 <p>Adapting models for specific tasks or domains often involves specialized training techniques:</p>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
                     <div>
@@ -1193,57 +1304,146 @@ async function handleUserInput(prompt, context) {
                     </div>
                     <div class="image-container">
                         <img src="cognimates_training_new.png" alt="Cognimates Model Training Diagram" class="rounded-lg shadow-lg object-contain max-h-[50vh]">
+                         <p class="image-caption">Conceptual example of training pipelines, potentially involving synthetic data.</p>
                     </div>
                 </div>
             </div>
         </section>
 
-       
-
+        <!-- Existing References Slide - Updated Placeholder -->
         <section class="slide references-slide">
             <div class="slide-content">
-               <h2>References</h2>
-               <ul>
-                   <li>ArXiv. (2024). Multimodality of AI for Education: Towards Artificial General Intelligence.</li>
-                   <li>ArXiv. (2024). Multimodal Alignment and Fusion: A Survey.</li>
-                    <li>Cartesia Raises $27 Million to Build the Next Generation of Real-Time AI Models - PRWeb (2025)</li>
-                   <li>GM Insights. (2025). Multimodal AI Market Size & Share, Statistics Report 2025-2034.</li>
-                    <li>LiveKit Blog. (2024). An open source stack for real-time multimodal AI.</li>
-                   <li>MIT Technology Review. (2024). Multimodal: AI's new frontier.</li>
-                    <li>Mobius Labs - Efficient Multimodal AI for Enterprise Applications (EliteAI Tools)</li>
-                   <li>Multimodal Fusion Artificial Intelligence Model to Predict Risk for MACE and Myocarditis... (PMC, 2024)</li>
-                   <li>Nature. (2025). On opportunities and challenges of large multimodal foundation models in education.</li>
-                    <li>NVIDIA Riva - Speech and Translation AI (NVIDIA)</li>
-                    <li>ResearchGate. (2025). SmolVLM: Redefining small and efficient multimodal models.</li>
-                   <li>Science Direct. (2025). Taking the next step with generative artificial intelligence: The transformative role of multimodal large language models in science education.</li>
-                    <li>U.S. Department of Education. (2024). AI Report.</li>
-                    <li>World Economic Forum. (2024). The future of learning: AI is revolutionizing education 4.0.</li>
-                    <li>Zilliz. (2024). Top 10 Multimodal AI Models of 2024.</li>
-                    <li>Druga, S. et al. (Relevant publications for ChemBuddy, MathMind, Cognimates - *Add Specific Citations*)</li>
-                    <li>Advances in Computer AI-assisted Multimodal Data Fusion Techniques (ResearchGate, 2024)</li>
-                    <li>Real-Time Multimodal Signal Processing for HRI in RoboCup... (ResearchGate, 2025)</li>
-                    <li>Designing the User Interface for Multimodal Speech and Pen-Based Gesture Applications... (ResearchGate)</li>
-                    <li>SmolVLM: Redefining small and efficient multimodal models (arXiv, 2025)</li>
-                    <li>USER-VLM 360°: Personalized Vision Language Models... (arXiv, 2025)</li>
-                    <li>Retrieval Augmented Generation and Understanding in Vision... (arXiv, 2025)</li>
-                    <li>GraphRAG with MongoDB Atlas... (MongoDB Blog, 2024)</li>
-                    <li>An open source stack for real-time multimodal AI (LiveKit Blog, 2024)</li>
-                    <li>Build Real-Time Multimodal XR Apps with NVIDIA AI Blueprint... (NVIDIA Blog, 2024)</li>
-                    <li>AIRLab-POLIMI/ROAMFREE (GitHub)</li>
-                    <li>MPE™ IMU & Sensor Fusion Software Solutions (221e)</li>
-                    <li>Development of an artificial intelligence-based multimodal diagnostic system for early detection of biliary atresia (PMC, 2024)</li>
-                    <li>MuDoC: An Interactive Multimodal Document-grounded Conversational AI System (arXiv, 2025)</li>
-                    <li>Kaushal, V., et al. (2024). Unifying AI Tutor Evaluation... GitHub.</li>
-
-               </ul>
+                <h2>References</h2>
+                <div class="references-list text-sm" style="column-count: 2; column-gap: 2rem;">
+                    <!-- Placeholder: Add references from research_report.md here -->
+                    <p class="italic text-gray-600">[Please insert the full list of references from the accompanying research_report.md document here. Format as needed.]</p>
+                    
+                    <!-- Example formatting (remove once real refs are added):
+                    <ol class="list-decimal list-inside space-y-1">
+                        <li>Author A., Author B. (Year). Title of Work. Journal/Conference, Vol(Issue), pp. 1-10.</li>
+                        <li>Author C. et al. (Year). Another Title. Publisher.</li>
+                    </ol>
+                    -->
+                </div>
             </div>
-       </section>
+        </section>
 
-       <section class="slide">
+        <section class="slide gradient-bg">
+             <div class="slide-content">
+                <h2>Core Patterns for Real-Time Multimodal Applications</h2>
+                <h3>Input Processing Architectures</h3>
+                <div class="image-container" style="text-align: center; margin-bottom: 2rem;">
+                    <img src="chembuddy_architecture.png" alt="Multimodal Input Processing Architectures" style="max-height: 250px; display: inline-block;" />
+                </div>
+                <div class="grid-layout grid-cols-1 md:grid-cols-2">
+                    <div class="card pink">
+                        <h3>Parallel Processing</h3>
+                        <p>Process each modality concurrently through specialized pipelines before fusion.</p>
+                        <ul>
+                            <li>Optimal for diverse modalities</li>
+                            <li>Better utilization of system resources</li>
+                        </ul>
+                    </div>
+                    <div class="card purple">
+                        <h3>Hierarchical Processing</h3>
+                        <p>Progressive abstraction of features across modalities from low to high-level.</p>
+                        <ul>
+                            <li>Mirrors human perception systems</li>
+                            <li>Enables cross-modal transfer</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- NEW SLIDE 12: Core Patterns - Model Selection -->
+        <section class="slide">
             <div class="slide-content">
-                <img src="thank_you_slide.png" alt="Thank You Slide">
+                <h2>Core Patterns for Real-Time Multimodal Applications</h2>
+                <h3>Model Selection & Deployment</h3>
+                <div class="grid-layout grid-cols-1 md:grid-cols-3">
+                    <div class="card pink">
+                        <h3>Cloud Models</h3>
+                        <p>Higher capability, larger parameter count models accessed via API</p>
+                        <ul>
+                            <li>Google's Gemini 2.5 Pro</li>
+                            <li>OpenAI's GPT-4V</li>
+                            <li>Anthropic's Claude 3.5 Sonnet</li>
+                        </ul>
+                    </div>
+                    <div class="card purple">
+                        <h3>Edge-Optimized Models</h3>
+                        <p>Compact models designed for on-device deployment</p>
+                        <ul>
+                            <li>SmolVLM (256M-2.2B)</li>
+                            <li>Moondream (1.6B)</li>
+                            <li>Qwen2VL (1.5B)</li>
+                        </ul>
+                    </div>
+                    <div class="card green">
+                        <h3>Specialized Architectures</h3>
+                        <p>Models with unique designs for specific requirements</p>
+                        <ul>
+                            <li>SSMs for ultra-low latency</li>
+                            <li>MiniCPM-V for visual reasoning</li>
+                            <li>Whisper/Riva for speech</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="image-container" style="text-align: center; margin-top: 2rem;">
+                    <img src="evaluation.png" alt="Model Evaluation Comparison" style="max-height: 200px; display: inline-block;" />
+                </div>
             </div>
-       </section>
+        </section>
+
+        <!-- NEW SLIDE 13: Core Patterns - Fusion -->
+        <section class="slide gradient-bg">
+            <div class="slide-content">
+                <h2>Core Patterns for Real-Time Multimodal Applications</h2>
+                <h3>Fusion & Context Modeling Approaches</h3>
+                <div class="image-container" style="text-align: center; margin-bottom: 2rem;">
+                    <img src="fusion.png" alt="Fusion Techniques Visualization" style="max-height: 250px; display: inline-block;" />
+                </div>
+                <div class="grid-layout grid-cols-1 md:grid-cols-2">
+                    <div class="card pink">
+                        <h3>Attention-Based Fusion</h3>
+                        <p>Using transformer architectures to create dynamic relationships between modalities</p>
+                        <ul>
+                            <li>Cross-modal attention</li>
+                            <li>Self-attention within modalities</li>
+                            <li>Contextual feature weighting</li>
+                        </ul>
+                    </div>
+                    <div class="card purple">
+                        <h3>Context Management</h3>
+                        <p>Maintaining coherent understanding across time and modalities</p>
+                        <ul>
+                            <li>Knowledge graph integration</li>
+                            <li>Retrieval-augmented generation</li>
+                            <li>Hierarchical context windows</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- NEW SLIDE 14: Latency & Synchronization -->
+        <section class="slide">
+            <div class="slide-content">
+                <h2>Latency & Synchronization Strategies</h2>
+                <h3>The Critical Timing Challenge</h3>
+                <div class="image-container" style="text-align: center; margin-bottom: 1.5rem;">
+                    <img src="latency_sync.png" alt="Multimodal Synchronization Windows Diagram" style="max-height: 250px; display: inline-block;" />
+                </div>
+                <p>Recent research reveals critical timing requirements for coherent multimodal processing:</p>
+                <ul>
+                    <li><strong>General Coherence Window:</strong> 32-45ms maximum delay between modalities</li>
+                    <li><strong>Tactile/Visual/Audio Integration:</strong> Even tighter 3.8ms window for certain applications</li>
+                    <li><strong>Performance Degradation:</strong> Systems show 18-24% accuracy drop when windows are missed</li>
+                </ul>
+                <div class="citation">Sources: "Advances in Computer AI-assisted Multimodal Data Fusion Techniques" (2024), "Real-Time Multimodal Signal Processing for HRI" (2025)</div>
+            </div>
+        </section>
 
     </div> <!-- End of presentation-container -->
 

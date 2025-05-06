@@ -1,0 +1,19 @@
+# System files
+.DS_Store
+Thumbs.db
+
+# Editor directories and files
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Node modules if any
+node_modules/
+
+# Build directories if any
+dist/
+build/
+
+# Local Netlify folder
+.netlify/
